@@ -6,27 +6,19 @@
 
     try {
         $conexao = new PDO($dsn, $usuario, $senha);
-
+        
         $query = '
-            create table if not exists tb_usuarios(
-                id int not null primary key auto_increment,
-                nome varchar(50) not null,
-                email varchar(100) not null,
-                senha varchar(32) not null
-            )
+            select * from tb_usuarios where id = 109
         ';
 
-        $retorno = $conexao->exec($query);
-        //0
+        $stmt = $conexao->query($query);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        echo $retorno;
+        echo '<pre>';
+        print_r($usuario);
+        echo '</pre>';
 
-        $query = '
-            delete from tb_usuarios
-        ';
-
-        $retorno = $conexao->exec($query);
-        echo $retorno;
+        echo $usuario['nome'];
 
     } catch(PDOException $e) {
         echo 'erro: ' . $e->getCode(). ' Mensagem: '.$e->getMessage();
